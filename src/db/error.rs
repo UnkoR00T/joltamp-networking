@@ -8,16 +8,30 @@ pub mod error {
     pub enum Error{
         #[error("Database error")]
         Db,
+        #[error("Request failed")]
+        Custom(Status)
     }
 
     impl<'r> Responder<'r, 'static> for Error{
         fn respond_to(self, request: &'r Request<'_>) -> response::Result<'static> {
-            let error_message = format!(r#"{{ "error": "{self}" }}"#);
-            Response::build()
-                .status(Status::InternalServerError)
-                .header(rocket::http::ContentType::JSON)
-                .sized_body(error_message.len(), std::io::Cursor::new(error_message))
-                .ok()
+            match self {
+                Error::Db => {
+                    let error_message = format!(r#"{{ "error": "{self}" }}"#);
+                    Response::build()
+                        .status(Status::InternalServerError)
+                        .header(rocket::http::ContentType::JSON)
+                        .sized_body(error_message.len(), std::io::Cursor::new(error_message))
+                        .ok()
+                }
+                Error::Custom(status) => {
+                    let error_message = format!(r#"{{ "error": "{self}" }}"#);
+                    Response::build()
+                        .status(status)
+                        .header(rocket::http::ContentType::JSON)
+                        .sized_body(error_message.len(), std::io::Cursor::new(error_message))
+                        .ok()
+                }
+            }
         }
     }
     impl From<surrealdb::Error> for Error {
