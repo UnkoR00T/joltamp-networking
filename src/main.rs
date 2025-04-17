@@ -8,7 +8,7 @@ use rocket::{launch, routes};
 use surrealdb::engine::remote::ws::Client;
 use surrealdb::Surreal;
 use crate::db::init::init;
-use crate::routes::create_account;
+use crate::routes::{auth_account, create_account, login_account};
 
 pub static DB: LazyLock<Surreal<Client>> = LazyLock::new(Surreal::init);
 
@@ -21,6 +21,8 @@ pub async fn rocket() -> _ {
             "/",
             routes![
                 create_account::create_account,
+                login_account::login_account,
+                auth_account::auth_account,
             ],
         )
     }
