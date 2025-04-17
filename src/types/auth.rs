@@ -1,7 +1,7 @@
 use rocket::http::Status;
 use rocket::request::{Request, FromRequest, Outcome};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AuthToken(pub String);
 
 #[rocket::async_trait]

@@ -11,17 +11,18 @@ use crate::db::error::error::Error;
 use crate::types::account::{AccountRequest, AccountResponse};
 use crate::types::auth::{AuthToken};
 use surrealdb::sql::Uuid;
+use crate::services::is_admin_account::is_admin_account;
 
-#[post("/account/auth/<app>")]
-pub async fn auth_account(app: &str, auth_token: AuthToken) -> Result<Status, Error> {
-    let app = Uuid::from_str(app);
-    match app {
-        Ok(app) => {
-            info!("App: {app}, Token: {0}", auth_token.0);
-            Ok(Status::Ok)
+#[post("/account/auth?<app>")]
+pub async fn auth_account(app: &str, auth_token: AuthToken) -> Result<status::Custom<Json<bool>>, Error> {
+    let jwt = Uuid::from_str(&*auth_token.0);
+    match jwt {
+        Ok(jwt) => {
+            let admin = is_admin_account(jwt, app).await?;
+            Ok(status::Custom(Status::Ok, Json(admin)))
         },
-        Err(_) => {
-            Err(Error::Db)
+        _ => {
+            Err(Error::Custom(Status::BadRequest))
         }
     }
 

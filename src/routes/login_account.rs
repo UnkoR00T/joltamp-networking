@@ -22,7 +22,7 @@ pub async fn login_account(account: Json<LoginRequest>) -> Result<status::Custom
         .bind(("email", email))
         .bind(("pass", password))
         .await?;
-
+    println!("{:?}", q_res);
     let account_data: Option<LoginQuery> = q_res.take(0)?;
     match account_data {
         Some(account) => {
