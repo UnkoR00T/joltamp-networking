@@ -21,7 +21,7 @@ const authorizeStore = useAuthorizeStore();
 
 function submitForm() {
   if(form.email.length > 3 && form.password.length > 3){
-    fetch(import.meta.env.VITE_API_URL + "/account/login", {
+    fetch("/account/login", {
       headers: {
         "Content-Type": "application/json",
       },
