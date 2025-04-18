@@ -13,6 +13,7 @@ A Rust-based backend service designed to handle user accounts and authentication
 - [@UnkoR00T](https://github.com/UnkoR00T):
   - Backend
   - DB design
+  - Frontend
 
 
 ## Documentation
