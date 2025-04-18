@@ -21,7 +21,7 @@ if(!authorizeStore.appUrl){
   router.push('/404')
 }
 
-fetch("http://localhost:8080/app/auth?app=" + authorizeStore.appId, {
+fetch("/app/auth?app=" + authorizeStore.appId, {
   method: 'POST',
   headers: {
     'Authorization': `${jwt}`,
@@ -40,7 +40,7 @@ fetch("http://localhost:8080/app/auth?app=" + authorizeStore.appId, {
   });
 
 const submit = () => {
-  fetch("http://localhost:8080/app/auth?app=" + authorizeStore.appId, {
+  fetch("/app/auth?app=" + authorizeStore.appId, {
     method: 'POST',
     headers: {
       'Authorization': `${jwt}`,
