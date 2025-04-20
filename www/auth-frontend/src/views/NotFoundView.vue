@@ -3,8 +3,14 @@
 </script>
 <template>
   <main>
-    <h1>404</h1>
-    <p>App you are trying to authorize is no where to be found!</p>
+    <div class="hero bg-base-200 w-[25dvw] p-5 rounded-xl">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">404</h1>
+          <p class="pt-3 text-md">We are unable to find this application.</p>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -15,13 +21,6 @@ main{
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-h1{
-  padding: 5px;
-  margin: 0;
-}
-p{
-  font-size: 20px;
 }
 </style>
 
