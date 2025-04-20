@@ -19,7 +19,7 @@ pub static DB: LazyLock<Surreal<Client>> = LazyLock::new(Surreal::init);
 #[launch]
 pub async fn rocket() -> _ {
     unsafe{
-        env::set_var("ROCKET_PORT", "8080");
+        env::set_var("ROCKET_PORT", "8000");
         init().await.expect("Something went wrong!");
         rocket::build()
             .attach(CORS)

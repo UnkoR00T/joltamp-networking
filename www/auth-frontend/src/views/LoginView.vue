@@ -50,162 +50,89 @@ function submitForm() {
 
 <template>
   <main>
-    <div class="login-card">
-      <h1>Welcome Back</h1>
-      <p>Please sign in to your account</p>
+    <div class="p-5 bg-base-200 rounded-xl w-[400px]">
+      <h1 class="text-3xl font-bold text-center">Welcome Back</h1>
+      <p class="text-center mb-5">Please sign in to your account</p>
       <form @submit.prevent="submitForm">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            v-model="form.email"
-            type="email"
-            id="email"
-            placeholder="you@example.com"
-            required
-          />
+        <div class="w-[100%]">
+          <label class="input w-[100%]">
+            <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <g
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke-width="2.5"
+                fill="none"
+                stroke="currentColor"
+              >
+                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </g>
+            </svg>
+            <input
+              v-model="form.email"
+              type="email"
+              required
+              placeholder="Email"
+              minlength="3"
+              maxlength="30"
+              class="w-[100%]"
+            />
+          </label>
         </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            v-model="form.password"
-            type="password"
-            id="password"
-            placeholder="••••••••"
-            required
-          />
+        <div class="mt-5 mb-2">
+          <label class="input w-[100%]">
+            <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <g
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke-width="2.5"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
+                ></path>
+                <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
+              </g>
+            </svg>
+            <input
+              v-model="form.password"
+              type="password"
+              required
+              placeholder="Password"
+              minlength="3"
+              maxlength="30"
+              title="Only letters, numbers or dash"
+            />
+          </label>
         </div>
 
-        <div class="form-options">
-          <label class="remember">
-            <input v-model="form.remember" type="checkbox" />
+        <div class="flex justify-between mb-7">
+          <label class="">
+            <input type="checkbox" class="toggle toggle-primary toggle-sm" v-model="form.remember"/>
             Remember me
           </label>
-          <a href="#" class="forgot">Forgot password?</a>
+          <a href="#" class="text-primary hover:underline">Forgot password?</a>
         </div>
-        <span class="error" v-if="error">{{error}}</span>
-        <button type="submit">Login</button>
+        <span class="text-error text-sm" v-if="error">{{error}}</span>
+        <button class="btn btn-primary w-[100%] text-base-200" type="submit">Login</button>
       </form>
 
-      <p class="signup">
+      <p class="signup text-sm">
         Don’t have an account?
-        <RouterLink to="/register" class="a">Sign up</RouterLink>
+        <RouterLink to="/register" class="text-primary hover:underline">Sign up</RouterLink>
       </p>
+      <p class="text-xs mt-5 text-center">&#169; Copyright by JoltAMP.pl</p>
     </div>
   </main>
 </template>
 
 <style scoped>
-.error{
-  color: #ed0000;
-}
 main {
   height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f0f4f8;
-}
-
-.login-card {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 360px;
-  text-align: center;
-}
-
-.login-card h1 {
-  margin: 0 0 0.5rem;
-  font-size: 1.75rem;
-}
-
-.login-card p {
-  margin: 0 0 1.5rem;
-  color: #555;
-}
-
-.form-group {
-  margin-bottom: 1.25rem;
-  text-align: left;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.form-group input {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border: 1px solid #ccd0d5;
-  border-radius: 6px;
-  transition: border-color 0.2s;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: #4a90e2;
-}
-
-.form-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  font-size: 0.875rem;
-}
-
-.form-options .remember {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.form-options .forgot {
-  color: #4a90e2;
-  text-decoration: none;
-}
-
-.form-options .forgot:hover {
-  text-decoration: underline;
-}
-
-button {
-  width: 100%;
-  padding: 0.75rem 0;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-  background: #4a90e2;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-button:hover {
-  background: #357abd;
-}
-
-.signup {
-  margin-top: 1.25rem;
-  font-size: 0.875rem;
-  color: #555;
-}
-
-.signup > .a {
-  color: #4a90e2;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.signup a:hover {
-  text-decoration: underline;
 }
 </style>

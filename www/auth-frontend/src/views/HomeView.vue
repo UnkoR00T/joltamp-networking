@@ -85,8 +85,14 @@ const authCheck = async () => {
 
 <template>
   <main>
-    <h1>Redirecting...</h1>
-    <p>We are thinking what to do with you.</p>
+    <div class="hero bg-base-200 w-[25dvw] p-5 rounded-xl">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">Redirecting...</h1>
+          <p class="pt-3 text-md">We are thinking what to do with you.</p>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -97,12 +103,5 @@ main{
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-h1{
-  padding: 5px;
-  margin: 0;
-}
-p{
-  font-size: 20px;
 }
 </style>
