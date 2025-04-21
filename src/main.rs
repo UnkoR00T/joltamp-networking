@@ -3,6 +3,7 @@ mod types;
 mod routes;
 mod services;
 mod cors;
+mod guards;
 
 use std::env;
 use std::sync::LazyLock;
@@ -12,7 +13,8 @@ use surrealdb::engine::remote::ws::Client;
 use surrealdb::Surreal;
 use crate::cors::CORS;
 use crate::db::init::init;
-use crate::routes::{auth_account, create_account, create_app, login_account, get_app, verify_account, authorize_app};
+use crate::routes::{auth_account, create_account, create_app, login_account, get_app, verify_account, authorize_app, panel};
+use crate::routes::panel::{get_apps, get_users};
 
 pub static DB: LazyLock<Surreal<Client>> = LazyLock::new(Surreal::init);
 
@@ -23,9 +25,7 @@ pub async fn rocket() -> _ {
         init().await.expect("Something went wrong!");
         rocket::build()
             .attach(CORS)
-            .mount(
-            "/",
-            routes![
+            .mount("/", routes![
                 cors::preflight_cors,
                 create_account::create_account,
                 login_account::login_account,
@@ -34,7 +34,11 @@ pub async fn rocket() -> _ {
                 create_app::create_app,
                 authorize_app::authorize_app,
                 get_app::get_app
-            ],
-        ).mount("/site", FileServer::from(relative!("www/auth-frontend/dist")))
+            ], )
+            .mount("/panel", routes![
+                get_users::get_users,
+                get_apps::get_apps
+            ])
+            .mount("/site", FileServer::from(relative!("www/auth-frontend/dist")))
     }
 }

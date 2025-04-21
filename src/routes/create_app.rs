@@ -6,9 +6,9 @@ use uuid::Uuid;
 use crate::DB;
 use crate::db::error::error::Error;
 use crate::routes::auth_account::auth_account;
-use crate::types::account::{AccountRequest, AccountResponse};
+use crate::types::account::{Account, AccountResponse};
 use crate::types::app::{App, CreateAppRequest, CreateAppResponse};
-use crate::types::auth::AuthToken;
+use crate::guards::auth_guard::AuthToken;
 
 #[post("/app/create", data = "<app>")]
 pub async fn create_app(app: Json<CreateAppRequest>, auth_token: AuthToken) -> Result<status::Custom<Json<CreateAppResponse>>, Error> {
