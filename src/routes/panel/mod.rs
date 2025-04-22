@@ -5,6 +5,5 @@ pub mod change_user_password;
 pub mod change_user_info;
 pub mod get_apps;
 pub mod rm_app;
-pub mod change_app_name;
 pub mod change_app_id;
 pub mod change_app_perms;

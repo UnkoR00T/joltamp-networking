@@ -14,7 +14,7 @@ use surrealdb::Surreal;
 use crate::cors::CORS;
 use crate::db::init::init;
 use crate::routes::{auth_account, create_account, create_app, login_account, get_app, verify_account, authorize_app, panel};
-use crate::routes::panel::{get_apps, get_users};
+use crate::routes::panel::{change_app_perms, get_apps, get_users};
 
 pub static DB: LazyLock<Surreal<Client>> = LazyLock::new(Surreal::init);
 
@@ -37,7 +37,8 @@ pub async fn rocket() -> _ {
             ], )
             .mount("/panel", routes![
                 get_users::get_users,
-                get_apps::get_apps
+                get_apps::get_apps,
+                change_app_perms::change_app_perms,
             ])
             .mount("/site", FileServer::from(relative!("www/auth-frontend/dist")))
     }

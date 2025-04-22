@@ -10,18 +10,19 @@ use crate::types::app::CreateAppRequest;
 use crate::guards::auth_guard::AuthToken;
 use crate::guards::networking_admin_guard::AdminGuard;
 
-#[get("/users")]
-pub async fn get_users(admin: AdminGuard) -> Result<status::Custom<Json<Vec<AccountSafe>>>, Error> {
-    if(admin.0) {
-        let query = r#"
-                    SELECT * FROM account;
-                "#;
-        let mut q_res = DB
-            .query(query)
-            .await?;
-        let accounts: Vec<AccountSafe> = q_res.take(0)?;
-        Ok(status::Custom(Status::Ok, Json(accounts)))
-    }else{
-        Err(Error::Custom(Status::Unauthorized))
+#[get("/users?<page>&<limit>")]
+pub async fn get_users(admin: AdminGuard, page: i32, limit: i32) -> Result<status::Custom<Json<Vec<AccountSafe>>>, Error> {
+    if(limit > 100){
+        return Err(Error::Custom(Status::UnprocessableEntity));
     }
+    let query = r#"
+                SELECT * FROM account START $start LIMIT $limit;
+            "#;
+    let mut q_res = DB
+        .query(query)
+        .bind(("start", (page - 1) * limit))
+        .bind(("limit", limit))
+        .await?;
+    let accounts: Vec<AccountSafe> = q_res.take(0)?;
+    Ok(status::Custom(Status::Ok, Json(accounts)))
 }
