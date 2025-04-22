@@ -10,8 +10,8 @@ use crate::guards::auth_guard::AuthToken;
 use crate::guards::networking_admin_guard::AdminGuard;
 
 #[get("/apps?<page>&<limit>")]
-pub async fn get_apps(admin: AdminGuard, page: i32, limit: i32) -> Result<status::Custom<Json<Vec<App>>>, Error> {
-    if(limit > 100){
+pub async fn get_apps(_admin: AdminGuard, page: i32, limit: i32) -> Result<status::Custom<Json<Vec<App>>>, Error> {
+    if limit > 100 {
         return Err(Error::Custom(Status::UnprocessableEntity));
     }
     let query = r#"

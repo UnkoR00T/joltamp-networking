@@ -10,6 +10,7 @@ use crate::guards::auth_guard::AuthToken;
 use crate::guards::networking_admin_guard::AdminGuard;
 use crate::routes::auth_account::auth_account;
 use crate::routes::get_app::get_app;
+use crate::services::check_app_existence::check_app_existence;
 use crate::types::app::{App, CreateAppRequest, CreateAppResponse};
 
 #[derive(Serialize, Deserialize)]
@@ -22,7 +23,7 @@ struct ChangePermsRequest {
 pub async fn change_app_perms(app: Json<ChangePermsRequest>, admin: AdminGuard) -> Result<Status, Error> {
     let app_id = app.app_id.clone();
     let perms = app.perms.clone();
-    match get_app(&app_id, admin.0).await{
+    match check_app_existence(&app_id).await{
         Ok(_) => {
             let query = r#"
                 UPDATE $app SET perms = $perms;

@@ -11,8 +11,8 @@ use crate::guards::auth_guard::AuthToken;
 use crate::guards::networking_admin_guard::AdminGuard;
 
 #[get("/users?<page>&<limit>")]
-pub async fn get_users(admin: AdminGuard, page: i32, limit: i32) -> Result<status::Custom<Json<Vec<AccountSafe>>>, Error> {
-    if(limit > 100){
+pub async fn get_users(_admin: AdminGuard, page: i32, limit: i32) -> Result<status::Custom<Json<Vec<AccountSafe>>>, Error> {
+    if limit > 100 {
         return Err(Error::Custom(Status::UnprocessableEntity));
     }
     let query = r#"

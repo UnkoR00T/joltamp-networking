@@ -15,7 +15,7 @@ impl<'r> FromRequest<'r> for AdminGuard {
             let auth_token = AuthToken(auth_header.to_string());
             match auth_account("Networking", auth_token.clone()).await {
                 Ok(admin) => {
-                    if(admin.1.0){
+                    if admin.1.0 {
                         Outcome::Success(AdminGuard(auth_token))
                     }else{
                         Outcome::Error((Status::Unauthorized, String::from("Networking admin is not authorized correctly")))
