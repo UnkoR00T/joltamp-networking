@@ -5,7 +5,7 @@ use surrealdb::sql::{Id, Thing};
 pub struct CreateAppRequest{
     pub(crate) name: String,
     perms: Vec<String>,
-    url: String
+    url: Option<String>
 }
 
 #[derive(Serialize, Deserialize, Clone)]

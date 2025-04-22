@@ -9,9 +9,9 @@ use crate::DB;
 use crate::db::error::error::Error;
 use crate::routes::auth_account::auth_account;
 use crate::routes::verify_account::verify_account;
-use crate::types::account::{AccountRequest, AccountResponse};
+use crate::types::account::{Account, AccountResponse};
 use crate::types::app::CreateAppRequest;
-use crate::types::auth::AuthToken;
+use crate::guards::auth_guard::AuthToken;
 use crate::types::login::LoginQuery;
 
 #[get("/app?<app>")]

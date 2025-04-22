@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use surrealdb::sql::{Id, Thing, Uuid};
 use crate::DB;
 use crate::db::error::error::Error;
-use crate::types::auth::AuthToken;
+use crate::guards::auth_guard::AuthToken;
 use crate::types::login::LoginQuery;
 
 #[derive(Serialize, Deserialize)]

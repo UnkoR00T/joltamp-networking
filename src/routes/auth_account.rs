@@ -8,8 +8,8 @@ use rocket::serde::json::Json;
 // use uuid::Uuid;
 use crate::DB;
 use crate::db::error::error::Error;
-use crate::types::account::{AccountRequest, AccountResponse};
-use crate::types::auth::{AuthToken};
+use crate::types::account::{Account, AccountResponse};
+use crate::guards::auth_guard::{AuthToken};
 use surrealdb::sql::Uuid;
 use crate::services::is_admin_account::is_admin_account;
 
