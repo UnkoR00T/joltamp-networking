@@ -15,8 +15,9 @@ struct ChangeJWTRequest {
     user_id: String,
 }
 
+/// Change user JWT route handler function for changing user jwt on demand.
 #[post("/user/change_jwt", data = "<app>")]
-pub async fn change_user_jwt(app: Json<ChangeJWTRequest>, admin: AdminGuard) -> Result<Status, Error> {
+pub async fn change_user_jwt(app: Json<ChangeJWTRequest>, _admin: AdminGuard) -> Result<Status, Error> {
     let user_id = app.user_id.clone();
     match check_user_existence(&user_id).await{
         Ok(_) => {
@@ -25,11 +26,11 @@ pub async fn change_user_jwt(app: Json<ChangeJWTRequest>, admin: AdminGuard) -> 
             let query = r#"
                 UPDATE $user SET jwt = rand::uuid::v7();
             "#;
-            let query = DB.query(query)
+            DB.query(query)
                 .bind(("user", Thing::from(("account", Id::Uuid(user_id)))))
                 .await?;
             Ok(Status::Ok)
         },
-        Err(e) => Err(Error::Custom(Status::BadRequest))
+        Err(_e) => Err(Error::Custom(Status::BadRequest))
     }
 }
