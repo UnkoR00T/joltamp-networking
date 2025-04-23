@@ -19,6 +19,8 @@ use crate::routes::panel::{change_app_id, change_app_perms, change_user_jwt, get
 
 pub static DB: LazyLock<Surreal<Client>> = LazyLock::new(Surreal::init);
 
+
+/// Set up rocket server, init database connection, bind routes and static files.
 #[launch]
 pub async fn rocket() -> Rocket<Build> {
     unsafe{

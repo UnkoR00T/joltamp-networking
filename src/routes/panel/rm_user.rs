@@ -14,6 +14,10 @@ struct RemoveUserRequest {
     user_id: String
 }
 
+/// Remove user route handler function ->
+/// Status:
+/// - 200: Ok
+/// - 400: BadRequest (User id is incorrect)
 #[post("/user/remove", data = "<user>")]
 pub async fn rm_user(user: Json<RemoveUserRequest>, _admin: AdminGuard) -> Result<Status, Error> {
     let user_id = user.user_id.clone();

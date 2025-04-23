@@ -13,6 +13,11 @@ struct RemoveAppRequest {
     app_id: String
 }
 
+/// Remove app route handler function ->
+/// Status:
+/// - 200: Ok
+/// - 400: BadRequest (App Notfound)
+/// - 406: NotAcceptable (Cant delete Networking app)
 #[post("/app/remove", data = "<app>")]
 pub async fn rm_app(app: Json<RemoveAppRequest>, _admin: AdminGuard) -> Result<Status, Error> {
     let app_id = app.app_id.clone();

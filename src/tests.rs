@@ -4,6 +4,8 @@ mod tests {
     use serde_json::json;
     use crate::rocket;
 
+
+    // Test for not found status
     #[rocket::async_test]
     async fn test_not_found() {
         let client = Client::tracked(rocket().await).await.expect("valid rocket instance");
@@ -11,6 +13,7 @@ mod tests {
         assert_eq!(res.status(), Status::NotFound);
     }
 
+    // Test for register handler status
     #[rocket::async_test]
     async fn test_register() {
         let client = Client::tracked(rocket().await).await.expect("valid rocket instance");
@@ -38,6 +41,7 @@ mod tests {
         assert_eq!(res.status(), Status::UnprocessableEntity);
     }
 
+    // Test for login handler status
     #[rocket::async_test]
     async fn test_login() {
         let client = Client::tracked(rocket().await).await.expect("valid rocket instance");
