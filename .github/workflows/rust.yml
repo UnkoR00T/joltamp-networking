@@ -11,7 +11,10 @@ env:
 
 jobs:
   build:
-
+    services:
+      surrealdb:
+        image: surrealdb/surrealdb:latest
+        options: --rm -p 9952:9952 -v /tmp/surrealdb_data:/var/lib/surrealdb
     runs-on: ubuntu-latest
 
     steps:
