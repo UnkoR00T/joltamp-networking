@@ -1,12 +1,12 @@
 use std::str::FromStr;
 use rocket::http::Status;
+use rocket::response::status;
 use surrealdb::sql::{Id, Thing, Uuid};
 use crate::DB;
 use crate::db::error::error::Error;
 use crate::types::account::Account;
-use crate::types::app::App;
 
-pub async fn check_user_existence(user: &str) -> Result<Status, Error> {
+pub async fn check_user_existence(user: &str) -> Result<status::Custom<Account>, Error> {
     let query = r#"
         SELECT * FROM $user;
     "#;
@@ -18,8 +18,8 @@ pub async fn check_user_existence(user: &str) -> Result<Status, Error> {
         .await?;
     let is_admin: Option<Account> = q_res.take(0)?;
     match is_admin {
-        Some(_) => {
-            Ok(Status::Found)
+        Some(account) => {
+            Ok(status::Custom(Status::Ok, account))
         },
         None => {
             Err(Error::Custom(Status::NotFound))

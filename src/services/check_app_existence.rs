@@ -1,10 +1,11 @@
 use rocket::http::Status;
+use rocket::response::status;
 use surrealdb::sql::{Id, Thing};
 use crate::DB;
 use crate::db::error::error::Error;
 use crate::types::app::App;
 
-pub async fn check_app_existence(app: &str) -> Result<Status, Error> {
+pub async fn check_app_existence(app: &str) -> Result<status::Custom<App>, Error> {
     let query = r#"
         SELECT * FROM $app;
     "#;
@@ -14,8 +15,8 @@ pub async fn check_app_existence(app: &str) -> Result<Status, Error> {
         .await?;
     let is_admin: Option<App> = q_res.take(0)?;
     match is_admin {
-        Some(_) => {
-            Ok(Status::Found)
+        Some(app) => {
+            Ok(status::Custom(Status::Ok, app))
         },
         None => {
             Err(Error::Custom(Status::NotFound))
