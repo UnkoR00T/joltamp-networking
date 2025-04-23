@@ -1,4 +1,4 @@
-use std::sync::{LazyLock, OnceLock};
+use std::sync::{LazyLock};
 use rocket::tokio::sync::OnceCell;
 use surrealdb::engine::remote::ws::Ws;
 use surrealdb::opt::auth::Root;

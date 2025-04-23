@@ -15,7 +15,7 @@ struct RemoveUserRequest {
 }
 
 #[post("/user/remove", data = "<user>")]
-pub async fn rm_user(user: Json<RemoveUserRequest>, admin: AdminGuard) -> Result<Status, Error> {
+pub async fn rm_user(user: Json<RemoveUserRequest>, _admin: AdminGuard) -> Result<Status, Error> {
     let user_id = user.user_id.clone();
     let user_id = Uuid::from_str(&user_id);
     match user_id {
@@ -24,7 +24,7 @@ pub async fn rm_user(user: Json<RemoveUserRequest>, admin: AdminGuard) -> Result
                 DELETE auths WHERE in == $user;
                 DELETE $user;
             "#;
-            let query = DB.query(query)
+            DB.query(query)
                 .bind(("user", Thing::from(("account", Id::Uuid(user_id)))))
                 .await?;
             Ok(Status::Ok)

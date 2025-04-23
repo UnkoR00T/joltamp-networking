@@ -14,7 +14,7 @@ struct RemoveAppRequest {
 }
 
 #[post("/app/remove", data = "<app>")]
-pub async fn rm_app(app: Json<RemoveAppRequest>, admin: AdminGuard) -> Result<Status, Error> {
+pub async fn rm_app(app: Json<RemoveAppRequest>, _admin: AdminGuard) -> Result<Status, Error> {
     let app_id = app.app_id.clone();
     if app_id == "Networking" {
         return Err(Error::Custom(Status::NotAcceptable));
@@ -25,11 +25,11 @@ pub async fn rm_app(app: Json<RemoveAppRequest>, admin: AdminGuard) -> Result<St
                 DELETE auths WHERE out == $cur_app;
                 DELETE $cur_app;
             "#;
-            let query = DB.query(query)
+            DB.query(query)
                 .bind(("cur_app", Thing::from(("auth_apps", Id::String(app_id)))))
                 .await?;
             Ok(Status::Ok)
         },
-        Err(e) => Err(Error::Custom(Status::BadRequest))
+        Err(_e) => Err(Error::Custom(Status::BadRequest))
     }
 }
