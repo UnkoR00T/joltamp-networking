@@ -2176,6 +2176,7 @@ dependencies = [
  "rand 0.8.5",
  "rocket",
  "serde",
+ "serde_json",
  "surrealdb",
  "thiserror 1.0.69",
  "uuid",

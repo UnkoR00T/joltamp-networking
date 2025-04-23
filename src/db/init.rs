@@ -1,15 +1,18 @@
+use std::sync::{LazyLock, OnceLock};
+use rocket::tokio::sync::OnceCell;
 use surrealdb::engine::remote::ws::Ws;
 use surrealdb::opt::auth::Root;
 use crate::DB;
-
+static INIT: LazyLock<OnceCell<()>> = LazyLock::new(OnceCell::new);
 pub async fn init() -> Result<(), surrealdb::Error> {
-    DB.connect::<Ws>("localhost:9952").await?;
-    DB.signin(Root{
-        username: "root",
-        password: "root"
-    }).await?;
-    DB.use_ns("Network").use_db("Users").await?;
-    DB.query("
+    INIT.get_or_try_init(|| async {
+        DB.connect::<Ws>("localhost:9952").await?;
+        DB.signin(Root {
+            username: "root",
+            password: "root"
+        }).await?;
+        DB.use_ns("Network").use_db("Users").await?;
+        DB.query("
             DEFINE TABLE IF NOT EXISTS account;
             DEFINE FIELD IF NOT EXISTS id ON TABLE account TYPE string;
             DEFINE FIELD IF NOT EXISTS firstname ON TABLE account TYPE string;
@@ -31,5 +34,7 @@ pub async fn init() -> Result<(), surrealdb::Error> {
             DEFINE FIELD IF NOT EXISTS admin ON auths TYPE bool DEFAULT false;
 
              ", ).await?;
+        Ok::<(), surrealdb::Error>(())
+    }).await?;
     Ok(())
 }

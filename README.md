@@ -1,5 +1,5 @@
 
-# JoltAMP Networking
+# JoltAMP Networking (Alpha)
 A Rust-based backend service designed to handle user accounts and authentication across the entire JoltAMP app ecosystem. The system enables single account access for multiple apps by leveraging JWT-based authentication and a centralized authorization model.
 
 - Built with Rust for safety and performance.
@@ -14,6 +14,10 @@ A Rust-based backend service designed to handle user accounts and authentication
   - Backend
   - DB design
   - Frontend
+- [@rraix0]():
+  - Code review
+- [@23czap]():
+  - Code review
 
 
 ## Documentation

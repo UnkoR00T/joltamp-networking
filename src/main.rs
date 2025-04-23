@@ -4,22 +4,23 @@ mod routes;
 mod services;
 mod cors;
 mod guards;
+mod tests;
 
 use std::env;
 use std::sync::LazyLock;
-use rocket::{launch, routes};
+use rocket::{launch, routes, Build, Rocket};
 use rocket::fs::{relative, FileServer};
 use surrealdb::engine::remote::ws::Client;
 use surrealdb::Surreal;
 use crate::cors::CORS;
 use crate::db::init::init;
 use crate::routes::{auth_account, create_account, create_app, login_account, get_app, verify_account, authorize_app, panel};
-use crate::routes::panel::{change_app_id, change_app_perms, change_user_jwt, get_apps, get_users, rm_app};
+use crate::routes::panel::{change_app_id, change_app_perms, change_user_jwt, get_apps, get_users, rm_app, rm_user};
 
 pub static DB: LazyLock<Surreal<Client>> = LazyLock::new(Surreal::init);
 
 #[launch]
-pub async fn rocket() -> _ {
+pub async fn rocket() -> Rocket<Build> {
     unsafe{
         env::set_var("ROCKET_PORT", "8000");
         init().await.expect("Something went wrong!");
@@ -41,7 +42,8 @@ pub async fn rocket() -> _ {
                 change_app_perms::change_app_perms,
                 change_app_id::change_app_id,
                 change_user_jwt::change_user_jwt,
-                rm_app::rm_app
+                rm_app::rm_app,
+                rm_user::rm_user
             ])
             .mount("/site", FileServer::from(relative!("www/auth-frontend/dist")))
     }
