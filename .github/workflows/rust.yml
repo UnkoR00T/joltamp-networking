@@ -26,7 +26,7 @@ jobs:
         surrealdb_strict: false
         surrealdb_log: info
         surrealdb_additional_args: --allow-all
-        surrealdb_retry_count: 30
+        surrealdb_retry_count: 120
     - name: Build
       run: cargo build --verbose
     - name: Run tests
