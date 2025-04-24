@@ -27,4 +27,4 @@ A Rust-based backend service designed to handle user accounts and authentication
 ## Tech Stack
 **Server:** Rust, Rocket, SurrealDB, Crypto, JWT.
 
-**Client** (not implemented): Vue3, Scss, Tailwind.
+**Client**: Vue3, Scss, Tailwind.
