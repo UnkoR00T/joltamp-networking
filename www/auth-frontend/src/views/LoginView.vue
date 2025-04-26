@@ -21,7 +21,7 @@ const authorizeStore = useAuthorizeStore();
 
 function submitForm() {
   if(form.email.length > 3 && form.password.length > 3){
-    fetch("/account/login", {
+    fetch(`${import.meta.env.VITE_API_URL}/account/login`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -36,7 +36,11 @@ function submitForm() {
           const data = await res.json();
           localStorage.setItem("jwt", data.jwt);
           if(authorizeStore.appId){
-            router.push("/?app=" + authorizeStore.appId);
+            if(authorizeStore.appId === "app_self"){
+              await router.push("/panel");
+            }else{
+              await router.push("/?app=" + authorizeStore.appId);
+            }
           }
         }else{
           error.value = "Password/Email is incorrect, or account dont exists."

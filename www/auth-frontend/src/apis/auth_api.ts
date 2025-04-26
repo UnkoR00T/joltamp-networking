@@ -12,7 +12,7 @@ const api = {
                 window.location.href = '/site?app=Networking';
                 reject();
             }
-            axios.post('/auth?app=Networking', null, {
+            axios.post(`${import.meta.env.VITE_API_URL}/account/auth?app=Networking`, null, {
                 headers: {
                     Authorization: `${token}`
                 }

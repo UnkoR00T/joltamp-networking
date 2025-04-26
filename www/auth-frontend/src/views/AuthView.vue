@@ -21,7 +21,7 @@ if(!authorizeStore.appUrl){
   router.push('/404')
 }
 
-fetch("/app/auth?app=" + authorizeStore.appId, {
+fetch(`${import.meta.env.VITE_API_URL}/app/auth?app=${authorizeStore.appId}`, {
   method: 'POST',
   headers: {
     'Authorization': `${jwt}`,
@@ -40,7 +40,7 @@ fetch("/app/auth?app=" + authorizeStore.appId, {
   });
 
 const submit = () => {
-  fetch("/app/auth?app=" + authorizeStore.appId, {
+  fetch(`${import.meta.env.VITE_API_URL}/app/auth?app=${authorizeStore.appId}`, {
     method: 'POST',
     headers: {
       'Authorization': `${jwt}`,

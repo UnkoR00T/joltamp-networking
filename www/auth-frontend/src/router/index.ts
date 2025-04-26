@@ -9,6 +9,8 @@ import AppsPanelView from '@/views/panel/AppsPanelView.vue'
 import AppPanelView from '@/views/panel/AppPanelView.vue'
 import UsersPanelView from '@/views/panel/UsersPanelView.vue'
 import UserPanelView from '@/views/panel/UserPanelView.vue'
+import LogoutView from '@/views/LogoutView.vue'
+import AuthPanelView from '@/views/panel/AuthPanelView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +41,11 @@ const router = createRouter({
       component: AuthView,
     },
     {
+      path: '/logout',
+      name: 'logout',
+      component: LogoutView
+    },
+    {
       path: '/panel',
       name: 'panel',
       component: MainPanelView,
@@ -62,6 +69,11 @@ const router = createRouter({
           path: '/panel/user',
           name: 'paneluser',
           component: UserPanelView
+        },
+        {
+          path: '/panel/auth',
+          name: 'panelauth',
+          component: AuthPanelView
         }
       ]
     }

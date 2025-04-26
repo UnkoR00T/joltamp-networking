@@ -4,7 +4,6 @@ import api from '@/apis/auth_api.ts'
 import { useRouter } from 'vue-router'
 
 const router = useRouter();
-
 router.beforeEach( async (to, from, next) => {
   if (to.path.includes('panel')) {
     await api.verify().then(() => {
@@ -13,6 +12,7 @@ router.beforeEach( async (to, from, next) => {
       console.log("Not authenticated");
     })
   }
+  next()
 })
 
 </script>
@@ -30,7 +30,7 @@ router.beforeEach( async (to, from, next) => {
             class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
             <li><RouterLink to="/panel/apps">Apps</RouterLink></li>
             <li><RouterLink to="/panel/users">Users</RouterLink></li>
-            <li><RouterLink to="/logout">Log out</RouterLink></li>
+            <li><RouterLink to="../logout">Log out</RouterLink></li>
           </ul>
         </div>
         <RouterLink to="/panel" class="btn btn-ghost text-xl">JoltAMP</RouterLink>
