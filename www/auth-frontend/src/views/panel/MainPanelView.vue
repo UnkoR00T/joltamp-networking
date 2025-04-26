@@ -1,5 +1,20 @@
 <script setup lang="ts">
 
+import api from '@/apis/auth_api.ts'
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
+
+router.beforeEach( async (to, from, next) => {
+  if (to.path.includes('panel')) {
+    await api.verify().then(() => {
+      next();
+    }).catch(() => {
+      console.log("Not authenticated");
+    })
+  }
+})
+
 </script>
 
 <template>
