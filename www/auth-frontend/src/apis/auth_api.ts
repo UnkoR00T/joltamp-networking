@@ -22,6 +22,10 @@ const api = {
                     window.location.href = '/site?app=Networking';
                     reject();
                 }else{
+                  if(!res.data){
+                    window.location.href = '/site?app=Networking';
+                    reject();
+                  }
                     resolve();
                 }
             })

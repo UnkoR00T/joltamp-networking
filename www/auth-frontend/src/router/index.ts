@@ -9,7 +9,6 @@ import AppsPanelView from '@/views/panel/AppsPanelView.vue'
 import AppPanelView from '@/views/panel/AppPanelView.vue'
 import UsersPanelView from '@/views/panel/UsersPanelView.vue'
 import UserPanelView from '@/views/panel/UserPanelView.vue'
-import api from '@/apis/auth_api.ts'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
