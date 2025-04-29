@@ -17,17 +17,21 @@ const api = {
                     Authorization: `${token}`
                 }
             }).then((res) => {
-                if(res.status == 401){
+                if(res.status == 401 || res.status == 400){
                     localStorage.removeItem('jwt');
                     window.location.href = '/site?app=Networking';
                     reject();
                 }else{
                   if(!res.data){
-                    window.location.href = '/site?app=Networking';
+                    alert("Cannot access this site!");
                     reject();
                   }
                     resolve();
                 }
+            }).catch((err) => {
+              localStorage.removeItem('jwt');
+              window.location.href = '/site?app=Networking';
+              reject();
             })
         })
     }

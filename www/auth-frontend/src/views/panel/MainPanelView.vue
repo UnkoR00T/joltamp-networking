@@ -9,10 +9,10 @@ router.beforeEach( async (to, from, next) => {
     await api.verify().then(() => {
       next();
     }).catch(() => {
+      next(false);
       console.log("Not authenticated");
     })
   }
-  next()
 })
 
 </script>

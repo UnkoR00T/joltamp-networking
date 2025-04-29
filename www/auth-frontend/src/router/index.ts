@@ -56,7 +56,7 @@ const router = createRouter({
           component: AppsPanelView
         },
         {
-          path: '/panel/app',
+          path: '/panel/app/<id>',
           name: 'panelapp',
           component: AppPanelView
         },
@@ -66,7 +66,7 @@ const router = createRouter({
           component: UsersPanelView
         },
         {
-          path: '/panel/user',
+          path: '/panel/user/<id>',
           name: 'paneluser',
           component: UserPanelView
         },
