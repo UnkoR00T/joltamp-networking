@@ -8,7 +8,6 @@ import MainPanelView from '@/views/panel/MainPanelView.vue'
 import AppsPanelView from '@/views/panel/AppsPanelView.vue'
 import AppPanelView from '@/views/panel/AppPanelView.vue'
 import UsersPanelView from '@/views/panel/UsersPanelView.vue'
-import UserPanelView from '@/views/panel/UserPanelView.vue'
 import LogoutView from '@/views/LogoutView.vue'
 import AuthPanelView from '@/views/panel/AuthPanelView.vue'
 
@@ -64,11 +63,6 @@ const router = createRouter({
           path: '/panel/users',
           name: 'panelusers',
           component: UsersPanelView
-        },
-        {
-          path: '/panel/user/:id',
-          name: 'paneluser',
-          component: UserPanelView
         },
         {
           path: '/panel/auth',

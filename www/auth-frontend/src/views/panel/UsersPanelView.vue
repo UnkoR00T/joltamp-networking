@@ -24,9 +24,6 @@ const fetchData = async () => {
       })
   }
 }
-const info = (user_id: string) => {
-  router.push("/panel/user/" + user_id);
-}
 const remove = (user_id: string) => {
   if (confirm("Are you sure you want to permanently delete this user?")){
     if(token){
@@ -70,7 +67,6 @@ onBeforeMount(() => {
         <td>{{ record.lastname }}</td>
         <td>{{ record.email }}</td>
         <td class="gap-2 flex">
-          <button class="btn btn-primary" @click="info(record.id.id.Uuid)">Info</button>
           <button class="btn btn-error" @click="remove(record.id.id.Uuid)">Delete</button>
         </td>
       </tr>
