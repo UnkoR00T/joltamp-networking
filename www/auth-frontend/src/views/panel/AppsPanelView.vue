@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Ref, ref } from 'vue'
+import { onBeforeMount, type Ref, ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 
@@ -11,16 +11,18 @@ const limit = ref(15)
 const router = useRouter();
 
 const token = localStorage.getItem('jwt')
-if (token) {
-  axios
-    .get(`${import.meta.env.VITE_API_URL}/panel/apps?page=${page.value}&limit=${limit.value}`, {
-      headers: {
-        Authorization: `${token}`,
-      },
-    })
-    .then((res) => {
-      data.value = res.data
-    })
+const fetchData = async () => {
+  if (token) {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/panel/apps?page=${page.value}&limit=${limit.value}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((res) => {
+        data.value = res.data
+      })
+  }
 }
 const info = (app: string) => {
   router.push("/panel/app/" + app);
@@ -42,6 +44,9 @@ const remove = (app: string) => {
     }
   }
 }
+onBeforeMount(() => {
+  fetchData()
+})
 </script>
 
 <template>
@@ -69,6 +74,11 @@ const remove = (app: string) => {
         </tr>
       </tbody>
     </table>
+    <div class="flex justify-center mt-5 join">
+      <input type="number" placeholder="Page" class="input w-50 join-item" v-model="page" />
+      <input type="number" placeholder="Limit" class="input w-50 join-item" v-model="limit" />
+      <button class="btn btn-primary join-item px-5" @click="fetchData">Search</button>
+    </div>
   </div>
 </template>
 
