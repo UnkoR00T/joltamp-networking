@@ -12,7 +12,7 @@ if(app){
 }
 console.log(jwt);
 if(jwt){
-  fetch("/account/verify", {
+  fetch(`${import.meta.env.VITE_API_URL}/account/verify`, {
     method: 'POST',
     headers: {
       Authorization: `${jwt}`
@@ -37,7 +37,7 @@ if(jwt){
 }
 
 const appCheck = async () => {
-  fetch("/app?app="+ app, {
+  fetch(`${import.meta.env.VITE_API_URL}/app?app=${app}`, {
     method: 'GET',
     headers: {
       Authorization: `${jwt}`,
@@ -65,7 +65,7 @@ const appCheck = async () => {
 }
 
 const authCheck = async () => {
-  fetch("/account/auth?app="+ app, {
+  fetch(`${import.meta.env.VITE_API_URL}/account/auth?app=${app}`, {
     method: 'POST',
     headers: {
       Authorization: `${jwt}`,

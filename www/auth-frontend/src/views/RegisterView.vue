@@ -25,7 +25,7 @@ const authorizeStore = useAuthorizeStore();
 
 function submitForm() {
   if(form.email.length > 3 && form.password.length > 3 && form.firstname.length > 3 && form.password.length > 3){
-    fetch("/account/register", {
+    fetch(`${import.meta.env.VITE_API_URL}/account/register`, {
       headers: {
         "Content-Type": "application/json",
       },
