@@ -67,9 +67,9 @@ onBeforeMount(() => {
           <th>{{ record.id.id.String }}</th>
           <td>{{ record.perms }}</td>
           <td><a :href="record.url" class="link-primary">Click/Hover</a></td>
-          <td class="gap-2 flex">
-            <button class="btn btn-primary" @click="info(record.name)">Info</button>
-            <button class="btn btn-error" @click="remove(record.name)">Delete</button>
+          <td class="flex join">
+            <button class="btn btn-primary join-item" @click="info(record.name)">Info</button>
+            <button class="btn btn-error join-item" @click="remove(record.name)">Delete</button>
           </td>
         </tr>
       </tbody>

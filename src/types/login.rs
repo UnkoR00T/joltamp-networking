@@ -11,6 +11,7 @@ pub struct LoginRequest{
 #[derive(Serialize, Deserialize)]
 pub struct LoginQuery{
     pub id: Thing,
+    pub password: String,
     jwt: Uuid
 }
 
