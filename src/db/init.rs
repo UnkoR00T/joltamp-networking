@@ -19,7 +19,7 @@ pub async fn init() -> Result<(), surrealdb::Error> {
             DEFINE FIELD IF NOT EXISTS lastname ON TABLE account TYPE string;
             DEFINE FIELD IF NOT EXISTS email ON TABLE account TYPE string ASSERT string::is::email($value);
             DEFINE INDEX IF NOT EXISTS email_index ON TABLE account FIELDS email UNIQUE;
-            DEFINE FIELD IF NOT EXISTS password ON TABLE account TYPE string DEFAULT ALWAYS crypto::argon2::generate($value);
+            DEFINE FIELD IF NOT EXISTS password ON TABLE account TYPE string;
             DEFINE FIELD IF NOT EXISTS jwt ON TABLE account TYPE uuid DEFAULT ALWAYS rand::uuid::v7();
 
             DEFINE TABLE IF NOT EXISTS auth_apps;

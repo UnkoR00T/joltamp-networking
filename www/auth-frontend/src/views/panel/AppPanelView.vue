@@ -3,6 +3,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { onBeforeMount, type Ref, ref } from 'vue'
 import axios from 'axios'
+import api from '@/apis/auth_api.ts'
 
 const route = useRoute();
 const router = useRouter();
@@ -27,28 +28,28 @@ onBeforeMount(() => {
 })
 const remove = (app: string) => {
   if (confirm("Are you sure you want to permanently delete this app?")){
-    if(token){
+    api.verify().then(() => {
       axios.post(`${import.meta.env.VITE_API_URL}/panel/app/remove`, {
-        app_id: app
-      }, {
-        headers: {
-          Authorization: `${token}`,
-        }
-      }).then((res) => {
-        if(res.status === 200){
-          router.push("/panel/apps");
-        }
-      }).catch((err) => {
-        if(err.status === 406){
-          alert("This app cannot be changed!")
-        }
-      })
-    }
+          app_id: app
+        }, {
+          headers: {
+            Authorization: `${token}`,
+          }
+        }).then((res) => {
+          if(res.status === 200){
+            router.push("/panel/apps");
+          }
+        }).catch((err) => {
+          if(err.status === 406){
+            alert("This app cannot be changed!")
+          }
+        })
+    }).catch(() => {})
   }
 }
 const savePerms = () => {
   if (confirm("Are you sure you want to save?")){
-    if(token){
+    api.verify().then(() => {
       axios.post(`${import.meta.env.VITE_API_URL}/panel/app/change_perms`, {
         app_id: app,
         perms: data.value.perms
@@ -66,10 +67,11 @@ const savePerms = () => {
           alert("This app cannot be changed!");
         }
       })
-    }
+    })
   }
 }
 const changeAppId = () => {
+  api.verify().then(() => {}).catch(() => {return;})
   const appId = prompt("Enter new app id:");
   if (confirm("Are you sure you want to save?")){
     if(token && appId){
@@ -84,6 +86,30 @@ const changeAppId = () => {
         if(res.status === 200){
           data.value.name = appId;
           router.push("/panel/app/" + appId);
+        }
+      }).catch((err) => {
+        if(err.status === 406){
+          alert("This app cannot be changed!");
+        }
+      })
+    }
+  }
+}
+const changeAppUrl = () => {
+  api.verify().then(() => {}).catch(() => {return;})
+  const appUrl = prompt("Enter new app url:");
+  if (confirm("Are you sure you want to save?")){
+    if(token && appUrl){
+      axios.post(`${import.meta.env.VITE_API_URL}/panel/app/change_url`, {
+        app_id: app,
+        url: appUrl
+      }, {
+        headers: {
+          Authorization: `${token}`,
+        }
+      }).then((res) => {
+        if(res.status === 200){
+          data.value.url = appUrl;
         }
       }).catch((err) => {
         if(err.status === 406){
@@ -145,11 +171,14 @@ const removePerm = (item: string) => {
         </div>
         <div>
           <h1 class="text-3xl mb-3">Edit</h1>
+          <p class="link-primary cursor-pointer" @click="changeAppId()">
+            Edit app id
+          </p>
           <p class="link-primary cursor-pointer" @click="openPermsModal()">
             Edit perms
           </p>
-          <p class="link-primary cursor-pointer" @click="changeAppId()">
-            Edit app id
+          <p class="link-primary cursor-pointer" @click="changeAppUrl()">
+            Edit app url
           </p>
           <p class="link-error cursor-pointer" @click="remove(data.name)">
             Delete app

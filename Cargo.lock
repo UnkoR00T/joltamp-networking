@@ -2161,6 +2161,8 @@ dependencies = [
 name = "networking"
 version = "0.1.0"
 dependencies = [
+ "argon2",
+ "rand_core 0.6.4",
  "rocket",
  "serde",
  "serde_json",

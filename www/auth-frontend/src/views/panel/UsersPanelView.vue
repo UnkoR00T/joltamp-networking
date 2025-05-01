@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import { onBeforeMount, type Ref, ref } from 'vue'
 import axios from 'axios'
-import { useRouter } from 'vue-router'
+import api from '@/apis/auth_api.ts'
 
 const data: Ref<
   { id: { tb: string; id: { Uuid: string } }; firstname: string; lastname: string; email: string }[]
 > = ref([])
 const page = ref(1)
 const limit = ref(15)
-const router = useRouter();
 
 const token = localStorage.getItem('jwt')
 const fetchData = async () => {
-  if (token) {
+  api.verify().then(() => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/panel/users?page=${page.value}&limit=${limit.value}`, {
         headers: {
@@ -22,7 +21,7 @@ const fetchData = async () => {
       .then((res) => {
         data.value = res.data
       })
-  }
+  })
 }
 const remove = (user_id: string) => {
   if (confirm("Are you sure you want to permanently delete this user?")){
@@ -36,6 +35,22 @@ const remove = (user_id: string) => {
       }).then((res) => {
         if(res.status === 200){
           data.value = data.value.filter(x => x.id.id.Uuid !== user_id);
+        }
+      }).catch(() => {})
+    }
+  }
+}
+const logout = (user_id: string) => {
+  if (confirm("Are you sure you want to logout this user?")){
+    if(token){
+      axios.post(`${import.meta.env.VITE_API_URL}/panel/user/change_jwt`, {
+        user_id: user_id
+      }, {
+        headers: {
+          Authorization: `${token}`,
+        }
+      }).then((res) => {
+        if(res.status === 200){
         }
       }).catch(() => {})
     }
@@ -66,8 +81,9 @@ onBeforeMount(() => {
         <td>{{ record.firstname }}</td>
         <td>{{ record.lastname }}</td>
         <td>{{ record.email }}</td>
-        <td class="gap-2 flex">
-          <button class="btn btn-error" @click="remove(record.id.id.Uuid)">Delete</button>
+        <td class="flex join">
+          <button class="btn btn-primary join-item" @click="logout(record.id.id.Uuid)">Logout</button>
+          <button class="btn btn-error join-item" @click="remove(record.id.id.Uuid)">Delete</button>
         </td>
       </tr>
       </tbody>
