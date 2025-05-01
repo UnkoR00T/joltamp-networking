@@ -3,14 +3,14 @@ use surrealdb::sql::{Id, Thing};
 use uuid::Uuid;
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Account {
-    id: Option<Thing>,
+    pub id: Option<Thing>,
     #[serde(rename = "firstname")]
-    first_name: String,
+    pub first_name: String,
     #[serde(rename = "lastname")]
-    last_name: String,
-    email: String,
-    password: String,
-    jwt: Option<Uuid>
+    pub last_name: String,
+    pub email: String,
+    pub(crate) password: String,
+    pub jwt: Option<Uuid>
 }
 
 #[derive(Serialize, Deserialize, Clone)]
