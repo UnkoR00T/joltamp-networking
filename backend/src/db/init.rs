@@ -6,7 +6,7 @@ use crate::DB;
 static INIT: LazyLock<OnceCell<()>> = LazyLock::new(OnceCell::new);
 pub async fn init() -> Result<(), surrealdb::Error> {
     INIT.get_or_try_init(|| async {
-        DB.connect::<Ws>("localhost:9952").await?;
+        DB.connect::<Ws>("surrealdb:8000").await?;
         DB.signin(Root {
             username: "root",
             password: "root"
