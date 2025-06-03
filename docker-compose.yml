@@ -13,7 +13,7 @@ services:
       - surrealdb
   surrealdb:
     image: surrealdb/surrealdb:latest
-    command: start --log debug --user root --pass root file:/data/db
+    command: start --log debug --user root --pass root rocksdb:/data/db
     ports:
       - "9952:8000"
     volumes:
