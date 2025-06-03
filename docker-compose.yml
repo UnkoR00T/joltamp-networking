@@ -15,8 +15,5 @@ services:
     image: surrealdb/surrealdb:latest
     command: start --log debug --user root --pass root rocksdb:/data/db
     volumes:
-      - surrealdb-data:/data/db
+      - ./data:/data/db
     restart: unless-stopped
-
-volumes:
-  surrealdb-data:
