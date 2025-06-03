@@ -6,4 +6,3 @@ pub mod authorize_app;
 pub mod get_app;
 pub mod verify_account;
 pub mod panel;
-pub mod site_handler;

@@ -334,6 +334,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ace50bade8e6234aa140d9a2f552bbee1db4d353f69b8217bc503490fc1a9f26"
 
 [[package]]
+name = "backend"
+version = "0.1.0"
+dependencies = [
+ "argon2",
+ "rand_core 0.6.4",
+ "rocket",
+ "serde",
+ "serde_json",
+ "surrealdb",
+ "thiserror 1.0.69",
+ "tracing-subscriber",
+ "uuid",
+]
+
+[[package]]
 name = "backtrace"
 version = "0.3.74"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2155,20 +2170,6 @@ dependencies = [
  "num-integer",
  "num-traits",
  "rand 0.8.5",
-]
-
-[[package]]
-name = "networking"
-version = "0.1.0"
-dependencies = [
- "argon2",
- "rand_core 0.6.4",
- "rocket",
- "serde",
- "serde_json",
- "surrealdb",
- "thiserror 1.0.69",
- "uuid",
 ]
 
 [[package]]
