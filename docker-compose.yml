@@ -13,11 +13,11 @@ services:
       - surrealdb
   surrealdb:
     image: surrealdb/surrealdb:latest
+    user: "0:0"
     command: start --log debug --user root --pass root rocksdb:/data/db
     volumes:
       - surrealdb-data:/data/db
     restart: unless-stopped
-    user: "1000:1000"
 
 volumes:
   surrealdb-data:
