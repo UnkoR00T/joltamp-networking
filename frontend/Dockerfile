@@ -2,7 +2,7 @@ FROM node:20-alpine as build-stage
 
 WORKDIR /app
 COPY package*.json ./
-ENV VITE_API_URL="https://sso.joltamp.pl/api/"
+ENV VITE_API_URL="https://sso.joltamp.pl/api"
 RUN npm install
 COPY . .
 RUN npm run build
