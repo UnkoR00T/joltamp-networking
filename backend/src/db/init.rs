@@ -1,12 +1,23 @@
 use std::sync::{LazyLock};
+use std::time::Duration;
+use rocket::error;
 use rocket::tokio::sync::OnceCell;
+use rocket::tokio::time::sleep;
 use surrealdb::engine::remote::ws::Ws;
 use surrealdb::opt::auth::Root;
 use crate::DB;
 static INIT: LazyLock<OnceCell<()>> = LazyLock::new(OnceCell::new);
 pub async fn init() -> Result<(), surrealdb::Error> {
     INIT.get_or_try_init(|| async {
-        DB.connect::<Ws>("ws://surrealdb:9952").await?;
+        for i in 0..10 {
+            match DB.connect::<Ws>("ws://surrealdb:9952").await {
+                Ok(_) => break,
+                Err(e) => {
+                    error!("DB connection attempt {} failed: {:?}", i, e);
+                    sleep(Duration::from_secs(5)).await;
+                }
+            }
+        }
         DB.signin(Root {
             username: "root",
             password: "root"
