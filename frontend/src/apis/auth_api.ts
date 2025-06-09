@@ -6,7 +6,7 @@ const api = {
             const token = localStorage.getItem('jwt');
             if (!token){
                 localStorage.removeItem('jwt');
-                window.location.href = '?app=Networking';
+                window.location.href = '/?app=Networking';
                 reject();
             }
             axios.post(`${import.meta.env.VITE_API_URL}/account/auth?app=Networking`, null, {
@@ -16,7 +16,7 @@ const api = {
             }).then((res) => {
                 if(res.status == 401 || res.status == 400){
                     localStorage.removeItem('jwt');
-                    window.location.href = '?app=Networking';
+                    window.location.href = '/?app=Networking';
                     reject();
                 }else{
                   if(!res.data){
@@ -27,7 +27,7 @@ const api = {
                 }
             }).catch(() => {
               localStorage.removeItem('jwt');
-              window.location.href = '?app=Networking';
+              window.location.href = '/?app=Networking';
               reject();
             })
         })
