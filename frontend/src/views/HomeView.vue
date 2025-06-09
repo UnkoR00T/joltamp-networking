@@ -82,14 +82,7 @@ const authCheck = async () => {
 
 <template>
   <main>
-    <div class="hero bg-base-200 w-[25dvw] p-5 rounded-xl">
-      <div class="hero-content text-center">
-        <div class="max-w-md">
-          <h1 class="text-5xl font-bold">Redirecting...</h1>
-          <p class="pt-3 text-md">We are thinking what to do with you.</p>
-        </div>
-      </div>
-    </div>
+    <span class="loading loading-spinner loading-xl"></span>
   </main>
 </template>
 
