@@ -6,7 +6,7 @@ const route = useRoute();
 const token = route.query.token;
 const onload = async () => {
   if(!token){
-    window.location.href = '/site?app=Networking';
+    window.location.href = '/?app=Networking';
   }else{
     router.push('/panel');
   }
