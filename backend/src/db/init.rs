@@ -1,15 +1,17 @@
+use std::env;
 use std::sync::{LazyLock};
 use rocket::tokio::sync::OnceCell;
-use surrealdb::engine::remote::ws::Ws;
+use surrealdb::engine::remote::ws::Wss;
 use surrealdb::opt::auth::Root;
+use surrealdb::opt::IntoQuery;
 use crate::DB;
 static INIT: LazyLock<OnceCell<()>> = LazyLock::new(OnceCell::new);
 pub async fn init() -> Result<(), surrealdb::Error> {
     INIT.get_or_try_init(|| async {
-        DB.connect::<Ws>("ws://localhost:9952").await?;
+        DB.connect::<Wss>(env::var("DB_URI").unwrap()).await?;
         DB.signin(Root {
-            username: "root",
-            password: "root"
+            username: env::var("DB_USER").unwrap().as_str(),
+            password: env::var("DB_PASSWORD").unwrap().as_str(),
         }).await?;
         DB.use_ns("Network").use_db("Users").await?;
         DB.query("
