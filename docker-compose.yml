@@ -15,6 +15,10 @@ services:
       - surrealdb
     networks:
       - sso-net
+    environment:
+      - DB_USER
+      - DB_PASSWORD
+      - DB_URI
   surrealdb:
     image: surrealdb/surrealdb:latest
     user: "0:0"
