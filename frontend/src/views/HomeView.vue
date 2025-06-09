@@ -11,6 +11,9 @@ if(app){
   authorizeStore.setAppId(app.toString());
 }
 console.log(jwt);
+if(app){
+  authorizeStore.setAppId(app.toString());
+}
 if(jwt){
   fetch(`${import.meta.env.VITE_API_URL}/account/verify`, {
     method: 'POST',
@@ -23,16 +26,10 @@ if(jwt){
       appCheck();
     }else{
       localStorage.removeItem('jwt');
-      if(app){
-        authorizeStore.setAppId(app.toString());
-      }
       router.push('/login');
     }
   })
 }else{
-  if(app){
-    authorizeStore.setAppId(app.toString());
-  }
   router.push('/login');
 }
 
