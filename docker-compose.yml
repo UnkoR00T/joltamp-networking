@@ -5,6 +5,8 @@ services:
     restart: always
     networks:
       - sso-net
+    environment:
+      - VITE_API_URL
   backend:
     build: ./backend
     restart: always
